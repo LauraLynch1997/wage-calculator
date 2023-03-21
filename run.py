@@ -65,14 +65,21 @@ def update_worksheet(data, worksheet):
     worksheet_to_update.append_row(data)
     print(f"{worksheet} worksheet updated successfully\n")
 
+def get_pay_rate(rota):
+    pay_rates = SHEET.worksheet("Pay-Rates")
+    print(rota[0])
+    cell = pay_rates.find(str(int(rota[0])))
+    print("Found something at R%sC%s" % (cell.row, cell.col))
+    return pay_rates
 
 def main():
     """
     Run all program functions
     """
     data = get_sales_data()
-    sales_data = [float(num) for num in data]
-    update_worksheet(sales_data, "Rota")
+    rota_data = [float(num) for num in data]
+    update_worksheet(rota_data, "Rota")
+    get_pay_rate(rota_data)
 
 print("Welcome to Love Sandwiches Data Automation")
 main()
