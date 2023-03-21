@@ -74,9 +74,29 @@ def get_pay_rate(rota):
     print(rate)
     return rate
 
-def calculate_gross(rota_data, pay_rate):
-    return float(pay_rate) * rota_data[1]
+def calculate_gross(hours, pay_rate):
+    return float(pay_rate) * hours
 
+def calculate_taxes(id, gross):
+    tax_data = [id, gross]
+    weekly_tax_cut_off = 40000 / 52
+    low_band_full_tax = weekly_tax_cut_off * 0.2
+    total_income_tax = 0
+    if gross > weekly_tax_cut_off:
+        cut_off_tax = gross - weekly_tax_cut_off
+        high_band_tax = cut_off_tax * 0.4
+        total_income_tax = high_band_tax + low_band_full_tax
+        tax_data.append(total_income_tax)
+    else:
+        total_income_tax = gross * 0.2
+        tax_data.append(total_income_tax)
+    prsi = gross * 0.04
+    tax_data.append(prsi)
+    usc = gross * 0.05
+    tax_data.append(usc)
+    net = total_income_tax + prsi + usc
+    tax_data.append(net)
+    return tax_data
 
 def main():
     """
@@ -86,8 +106,10 @@ def main():
     rota_data = [float(num) for num in data]
     update_worksheet(rota_data, "Rota")
     pay_rate = get_pay_rate(rota_data)
-    gross_pay = calculate_gross(rota_data, pay_rate)
+    gross_pay = calculate_gross(rota_data[1], pay_rate)
     print(gross_pay)
+    tax_data = calculate_taxes(rota_data[0], gross_pay)
+    print(tax_data)
 
 print("Welcome to Love Sandwiches Data Automation")
 main()
