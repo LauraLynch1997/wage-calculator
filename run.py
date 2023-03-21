@@ -70,9 +70,13 @@ def get_pay_rate(rota):
     print(rota[0])
     cell = pay_rates.find(str(int(rota[0])))
     print("Found something at R%sC%s" % (cell.row, cell.col))
-    pay_rate = pay_rates.cell(cell.row, 2).value
-    print(pay_rate)
-    return pay_rate
+    rate = pay_rates.cell(cell.row, 2).value
+    print(rate)
+    return rate
+
+def calculate_gross(rota_data, pay_rate):
+    return float(pay_rate) * rota_data[1]
+
 
 def main():
     """
@@ -81,7 +85,9 @@ def main():
     data = get_sales_data()
     rota_data = [float(num) for num in data]
     update_worksheet(rota_data, "Rota")
-    get_pay_rate(rota_data)
+    pay_rate = get_pay_rate(rota_data)
+    gross_pay = calculate_gross(rota_data, pay_rate)
+    print(gross_pay)
 
 print("Welcome to Love Sandwiches Data Automation")
 main()
