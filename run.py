@@ -70,7 +70,9 @@ def get_pay_rate(rota):
     print(rota[0])
     cell = pay_rates.find(str(int(rota[0])))
     print("Found something at R%sC%s" % (cell.row, cell.col))
-    return pay_rates
+    pay_rate = pay_rates.cell(cell.row, 2).value
+    print(pay_rate)
+    return pay_rate
 
 def main():
     """
