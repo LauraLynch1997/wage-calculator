@@ -63,6 +63,16 @@ def validate_data(values):
         print(f"Invalid data: {e}, please try again.\n")
         return False
 
+    try:
+        [float(value) for value in values]
+        if float(values[1]) < 0 or float(values[1]) > 60:
+            raise ValueError(
+                f"Invalid hours entered, you provided {values[1]}"
+            )
+    except ValueError as e:
+        print(f"Invalid data: {e}, please try again.\n")
+        return False 
+
     return True
 
 
