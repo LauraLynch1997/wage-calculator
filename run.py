@@ -86,16 +86,16 @@ def calculate_taxes(id, gross):
         cut_off_tax = gross - weekly_tax_cut_off
         high_band_tax = cut_off_tax * 0.4
         total_income_tax = high_band_tax + low_band_full_tax
-        tax_data.append(total_income_tax)
+        tax_data.append(round(total_income_tax, 2))
     else:
         total_income_tax = gross * 0.2
-        tax_data.append(total_income_tax)
+        tax_data.append(round(total_income_tax, 2))
     prsi = gross * 0.04
-    tax_data.append(prsi)
+    tax_data.append(round(prsi, 2))
     usc = gross * 0.05
-    tax_data.append(usc)
+    tax_data.append(round(usc, 2))
     net_tax = total_income_tax + prsi + usc
-    tax_data.append(gross - net_tax)
+    tax_data.append(round(gross - net_tax, 2))
     return tax_data
 
 
