@@ -94,9 +94,10 @@ def calculate_taxes(id, gross):
     tax_data.append(prsi)
     usc = gross * 0.05
     tax_data.append(usc)
-    net = total_income_tax + prsi + usc
-    tax_data.append(net)
+    net_tax = total_income_tax + prsi + usc
+    tax_data.append(gross - net_tax)
     return tax_data
+
 
 def main():
     """
@@ -110,6 +111,9 @@ def main():
     print(gross_pay)
     tax_data = calculate_taxes(rota_data[0], gross_pay)
     print(tax_data)
+    update_worksheet(tax_data, "Wages")
+
 
 print("Welcome to Love Sandwiches Data Automation")
+
 main()
