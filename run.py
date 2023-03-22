@@ -30,7 +30,7 @@ def get_sales_data():
         sales_data = data_str.split(",")
 
         if validate_data(sales_data):
-            print("Data is valid!")
+            print("Data & ID is valid!")
             break
 
     return sales_data
@@ -46,7 +46,18 @@ def validate_data(values):
         [float(value) for value in values]
         if len(values) != 2:
             raise ValueError(
-                f"Exactly 6 values required, you provided {len(values)}"
+                f"Exactly 2 values required, you provided {len(values)}"
+            )
+    except ValueError as e:
+        print(f"Invalid data: {e}, please try again.\n")
+        return False
+
+    try:
+        pay_rates = SHEET.worksheet("Pay-Rates")
+        [float(value) for value in values]
+        if pay_rates.find(str(int(values[0]))) is None:
+            raise ValueError(
+                f"ID is not valid, you provided {values[0]}"
             )
     except ValueError as e:
         print(f"Invalid data: {e}, please try again.\n")
